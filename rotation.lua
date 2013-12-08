@@ -84,11 +84,13 @@ ProbablyEngine.rotation.register_custom(264, "Boomkin Resto Shaman", {
 
 -- EarthShield Focus
 { "974", { 
+	"!player.buff(52127)",
 	"tank.buff(974).count < 2",
 	"!tank.range > 40"
 }, "tank" },
 
 { "974", { 
+	"!player.buff(52127)",
 	"tank.buff(974).duration < 2",
 	"!tank.range > 40"
 }, "tank" },
