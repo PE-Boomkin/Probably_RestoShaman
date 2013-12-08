@@ -41,12 +41,46 @@ ProbablyEngine.rotation.register_custom(264, "Boomkin Resto Shaman", {
 -- Primal Elementalist - Coming Soon
 
 
+-- Dispel - Click Toggle To Enable - 5.4 Content
+{ "77130", {
+	"toggle.dispel",
+	"@coreHealing.needsDispelled('Aqua Bomb')" -- Aqua Bomb (Proving Grounds)
+}},
+{ "77130", {
+	"toggle.dispel",
+	"@coreHealing.needsDispelled('Shadow Word: Bane')" -- Shadow Word: Bane (Fallen Protectors)
+}},
+{ "77130", {
+	"toggle.dispel",
+	"@coreHealing.needsDispelled('Lingering Corruption')" -- Lingering Corruption (Norushen)
+}},
+{ "77130", {
+	"toggle.dispel",
+	"player.buff(144364)",
+	"@coreHealing.needsDispelled('Mark of Arrogance')" -- Mark of Arrogance (Sha of Pride)
+}},
+{ "77130", {
+	"toggle.dispel",
+	"@coreHealing.needsDispelled('Corrosive Blood')" -- Corrosive Blood (Thok)
+}},
+
+-- Mouse Over Healing For Blobs and Other SoO NPCs. Note This Will Healing Anything So Use The Toggle To Disable When Not Needed
+{ "8004", { 
+	"toggle.mouseover", 
+	"!mouseover.buff(8936)", 
+	"mouseover.health < 100",
+	"!mouseover.range > 40"
+}, "mouseover" },
+
 -- Healing Rain - Mouseover + Earthliving Weapon Unleash - Hold Down Button
 { "73680", { 
 	"!tank.range > 40",
 	 "modifier.lshift"
 }, "tank" },
 { "73920", "modifier.lshift", "ground" },
+
+-- Wind Shear Interrupt
+{ "57994", "modifier.interrupts" },
 
 -- EarthShield Focus
 { "974", { 
@@ -62,7 +96,7 @@ ProbablyEngine.rotation.register_custom(264, "Boomkin Resto Shaman", {
 -- Riptide Focus
 { "61295", { 
 	"!tank.buff(61295)",
-	"tank.health < 95",
+	"tank.health < 99",
 	"!tank.range > 40"
 }, "tank" },
 
@@ -84,15 +118,9 @@ ProbablyEngine.rotation.register_custom(264, "Boomkin Resto Shaman", {
 
 -- Healing Surge Focus
 { "8004", { 
-	"tank.health <= 30",
+	"tank.health <= 40",
 	"!tank.range > 40"
 }, "tank" },
-
--- ChainHeal
-{ "1064", {
-	"@coreHealing.needsHealing(80, 3)", 
-	"!lowest.range > 40"
-}, "lowest" },
 
 -- Riptide
 { "61295", {
@@ -105,6 +133,12 @@ ProbablyEngine.rotation.register_custom(264, "Boomkin Resto Shaman", {
 { "8004", {
 	"player.buff(137331)",
 	"lowest.health < 95", 
+	"!lowest.range > 40"
+}, "lowest" },
+
+-- ChainHeal
+{ "1064", {
+	"@coreHealing.needsHealing(80, 3)", 
 	"!lowest.range > 40"
 }, "lowest" },
 
@@ -141,7 +175,7 @@ ProbablyEngine.rotation.register_custom(264, "Boomkin Resto Shaman", {
 -- Healing Wave
 { "331", {
 	"player.buff(53390)",
-	"@coreHealing.needsHealing(75, 3)",
+	"lowest.health < 75",
 	"!lowest.range > 40"
 }, "lowest" },
 
@@ -153,7 +187,7 @@ ProbablyEngine.rotation.register_custom(264, "Boomkin Resto Shaman", {
 
 -- Lightning Bolt
 { "403", {
-	"modifier.multitarget"
+	"toggle.lightning"
 }},
 
 
@@ -167,4 +201,9 @@ ProbablyEngine.rotation.register_custom(264, "Boomkin Resto Shaman", {
 -- Earth Living Weapon Enchant - Out Of Combat
 { "51730", "!player.enchant.mainhand" },
 
-})
+}, function()
+ProbablyEngine.toggle.create('dispel', 'Interface\\Icons\\ability_shaman_cleansespirit', 'Dispel', 'Toggle Dispel')
+ProbablyEngine.toggle.create('mouseover', 'Interface\\Icons\\spell_nature_healingway', 'Mouseover Healing Surge', 'Toggle Mouseover Healing Surge For SoO NPC Healing')
+ProbablyEngine.toggle.create('lightning', 'Interface\\Icons\\spell_nature_lightning', 'Lighning Bolt', 'Toggle Lighning Bolt')
+
+end)
