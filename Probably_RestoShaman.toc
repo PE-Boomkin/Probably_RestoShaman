@@ -1,0 +1,6 @@
+## Interface: 50400
+## Title: Probably - Boomkin Resto Shaman
+## Notes: ProbablyEngine Custom Resto Shaman
+## Dependencies: Probably
+
+rotation.lua
